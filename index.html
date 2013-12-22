@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="user-scalable=no,initial-scale=1, maximum-scale=1,minimum-scale=1, width=device-width" />
+        <title>You are here...</title>
+        <style type="text/css">
+            html { height: 100% }
+            body { height: 100%; margin: 0; padding: 0 }
+            #map_placer { height: 100%; width: 100%; }
+        </style>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBP1CECigCUCKyX7zg33yMsZaHR1CzMr0Q&sensor=true"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript">
+            //Add event listener to run when the device is ready
+            //google.maps.event.addDomListener(window, 'load', onDeviceReady);
+
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            //Device is ready, Get geolocation data
+            function onDeviceReady() {
+                var element = document.getElementById('map_placer');
+                element.innerHTML = 'Map will appear here';
+           //     navigator.geolocation.getCurrentPosition(onSuccess, onError);
+           		onSuccess();
+                element.innerHTML = 'After call to navigator';
+            }
+
+            //If successful, get position data
+            function onSuccess() {
+            	//			 var geoElement = document.getElementById('map_placer');
+			    //            geoElement.innerHTML =
+			    //                    'Latitude: ' + position.coords.latitude + '<br />' +
+			    //                    'Longitude: ' + position.coords.longitude + '<br />' +
+			    //                    'Altitude: ' + position.coords.altitude + '<br />' +
+			    //                    'Accuracy: ' + position.coords.accuracy + '<br />' +
+			    //                    'Heading: ' + position.coords.heading + '<br />' +
+			    //                    'Speed: ' + position.coords.speed + '<br />' +
+			    //                    'Timestamp2: ' + position.coords.timestamp + '<br />';
+				alert('hooha');
+				alert('heehee');
+		//var latLng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                alert('hooha2');
+                //Select map options
+                var mapOptions = {
+                    center: new google.maps.LatLng(41.079,-73.525),
+                    panControl: false,
+                    zoomControl: true,
+                    zoom: 16,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                //alert(latLng);
+                alert(mapOptions);
+                var map = new google.maps.Map(document.getElementById('map_placer'),mapOptions);
+                var marker = new google.maps.Marker({position: latLng,map: map});
+            }
+
+            //If not successfull, handle errors
+            function onError(error) {
+                var errString = '';
+                // Check to see if we have received an error code
+                if(error.code) {
+                    // If we have, handle it by case
+                    switch(error.code)
+                    {
+                        case 1: //Permission Denied
+                            errString =
+                                'Can not fetch the location information ' +
+                                'because the device does not have permission.';
+                            break;
+                        case 2: //Position is unavailable
+                            errString =
+                                'Can not fetch the location information ' +
+                                'because the device location could not ' +
+                                'be determined.';
+                            break;
+                        case 3: //Timeout Error
+                            errString =
+                                'Can not fetch the location within the ' +
+                                'specified time allocation.';
+                            break;
+                        default: //Unknown
+                            errString =
+                                'Can not fetch the location of the ' +
+                                'device because of an unknown error.';
+                            break;
+                    }
+                }
+                //Display errors in div
+                var element = document.getElementById('map_placer');
+                element.innerHTML = errString;
+            }
+        </script>
+    </head>
+    <body>
+        <div id="map_placer"></div>
+    </body>
+</html>
